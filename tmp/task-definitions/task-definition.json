@@ -1,0 +1,35 @@
+[
+
+	{
+		"essential": true,
+        "image": "906394416424.dkr.ecr.ap-northeast-1.amazonaws.com/aws-for-fluent-bit:latest",
+		"name": "log_router",
+		"firelensConfiguration": {
+			"type": "fluentbit"
+		},
+		"logConfiguration": {
+			"logDriver": "awslogs",
+			"options": {
+				"awslogs-group": "firelens-container",
+				"awslogs-region": "ap-northeast-1",
+				"awslogs-create-group": "true",
+				"awslogs-stream-prefix": "firelens"
+			}
+		},
+		"memoryReservation": 50
+	 },
+	 {
+		 "essential": true,
+		 "image": "httpd",
+         "name": "app",
+		 "logConfiguration": {
+			 "logDriver":"awsfirelens",
+			 "options": {
+				"Name": "firehose",
+				"region": "ap-northeast-1",
+				"delivery_stream": "my-stream"
+			}
+		},
+		"memoryReservation": 100
+	}
+]
